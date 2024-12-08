@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block head %}
+<head>
+    <link rel="stylesheet" href="{% static 'app/css/app.css' %}">
+    <title>Магазин товаров</title>
+</head>
+{% endblock %}
+{% block header %}
+<header>Список товаров</header>
+<form action="{% url 'product_search' %}" method="get" style="margin-top:10px; margin-left:20px;">
+    <input type="search" name="query" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon">
+    <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Поиск</button>
+</form>
+    <div class="href">
+        {% if not request.user.is_authenticated %}
+            <a href="{% url 'login' %}">Вход</a>
+            <a href="{% url 'register' %}"><strong>Регистрация</strong></a>
+        {% else %}
+            <a href="{% url 'logout' %}"><strong>Выход</strong></a>
+        {% endif %}
+    </div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'categories' %}">Категории</a></li>
+            <li><a href="{% url 'products' %}">Товары</a></li>
+            <li><a href="{% url 'about' %}">О нас</a></li>
+            <li><a href="{% url 'contact' %}">Контакты</a></li>
+            {% if cart|length != 0 %}
+            <li><a href="{% url 'cart_detail' %}">Корзина (<span id="cartLengthHeader">{{cart|length}}</span>)</a></li>
+            {% else %}
+            <li><a href="{% url 'cart_detail' %}">Корзина <span id="cartLengthHeader"></span></a></li>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            <li></li>
+            {% else %}
+            <li><a href="{% url 'orders' %}">Заказы</a></li>
+            {% endif %}
+            <li><a href="#">{{request.user}}</a></li>
+        </ul>
+    </nav>
+
+{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Категории товаров</h2>
+
+<img src="" alt="">
+{% for category in categories %}
+<ol class="list-group">
+        <li class="list-group-item"><a href="{{ category.get_absolute_url }}">{{category.name}}</a></li>
+</ol>
+{% endfor %}
+
+
+    </aside>
+</div>
+<main class="product-list">
+    <h2>Товары</h2>
+    <div class="products">
+        {% for product in products %}
+            <div class="product">
+                <input type="hidden" value="{{product.id}}">
+                {% if product.image %}
+                <img
+                  src="{{ product.image.url }}"
+                  style="width: 100px; height: 100px"
+                />
+                {% else %}
+                <img
+                  src="{% static 'img/no_image.png' %}"
+                  class="card-img-top"
+                  alt="{{ product.name }}"
+                  style="width: 100px; height: 100px"
+                />
+                {% endif %}
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <p>Цена: {{ product.price }} руб.</p>
+                <a href="{% url 'product_detail' product.slug %}" class="btn">Подробнее</a>
+                {% if product.id|string_value in cart.cart %}
+                <a href="{% url 'add_to_cart' product.slug %}" class="btn">Добавлено {{cart|count_items:product.id|string_value}}</a>
+                {% else %}
+                <a href="{% url 'add_to_cart' product.slug %}" class="btn">В корзину</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</main>
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+<footer >
+<span class="step-links">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">&laquo;Первая</a>
+    <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+    {% endif %}
+
+    <span >
+        Страница{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+    </span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">Последняя&raquo;</a>
+    {% endif %}
+</span>
+</footer>
+
+{% endblock %}

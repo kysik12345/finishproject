@@ -1,0 +1,144 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #ccdff1;
+    color: rgb(108, 12, 12);
+    text-align: center;
+    font-style: oblique;
+    font-size: xx-large;
+    margin: 0px;
+    padding: 10px;
+}
+
+h2{
+    color: rgb(108, 12, 12);
+    
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.navbar a {
+    color: rgb(21, 38, 134);
+    text-decoration: none;
+    padding: 10px;
+}
+
+.navbar a:hover {
+    background-color: #ccdff1;
+}
+
+.container {
+    display: flex;
+    margin: 20px;
+}
+
+.sidebar {
+    width: 20%;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.sidebar h2 {
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+.product-list {
+    width: 75%;
+    padding: 50px;
+}
+
+.product-list h2 {
+    margin-bottom: 20px;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product {
+    width: 23%; /* 4 товара в ряд */
+    margin-bottom: 20px;
+    margin-left:10px ;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #31abdf;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.btn-blue {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #2193e9;
+    color: white;
+    text-decoration: none;
+    
+}
+
+.btn:hover {
+    background-color: #2009f4;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #b9d6f1;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+}
+
+.footer__new {
+position: absolute;
+bottom: 0;
+left: 0;
+}
+.href{
+    text-align: right;
+    cursor: pointer;
+   
+}
